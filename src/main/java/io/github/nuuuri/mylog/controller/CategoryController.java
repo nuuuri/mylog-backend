@@ -1,14 +1,13 @@
 package io.github.nuuuri.mylog.controller;
 
 
+import io.github.nuuuri.mylog.data.entity.Category;
 import io.github.nuuuri.mylog.dto.CategoryDTO;
 import io.github.nuuuri.mylog.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +17,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
+
+    @PostMapping()
+    public void createCategory(@RequestBody CategoryDTO.Request categoryRequestDTO) {
+        Category parent = categoryService.getCategory(categoryRequestDTO.getParentId());
+
+        categoryService.createCategory(categoryRequestDTO.getName(), parent);
+    }
 
     @GetMapping()
     public ResponseEntity getCategoryList() {

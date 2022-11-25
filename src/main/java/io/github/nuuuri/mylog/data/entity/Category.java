@@ -1,5 +1,6 @@
 package io.github.nuuuri.mylog.data.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name="CATEGORY")
+@Table(name = "CATEGORY")
 public class Category {
 
     @Id
@@ -22,6 +23,9 @@ public class Category {
     private String name;
 
     @Column(nullable = false)
+    private String label;
+
+    @Column(nullable = false)
     private int count;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,4 +34,12 @@ public class Category {
 
     @OneToMany(mappedBy = "parent")
     private List<Category> subCategories = new ArrayList<>();
+
+    @Builder
+    public Category (String name, Category parent) {
+        this.name = name;
+        this.label = parent == null ? name : parent.label + "/" + name ;
+        this.count = 0;
+        this.parent = parent;
+    }
 }
