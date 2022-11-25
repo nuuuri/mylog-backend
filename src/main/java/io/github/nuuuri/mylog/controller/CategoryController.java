@@ -20,7 +20,8 @@ public class CategoryController {
 
     @PostMapping()
     public void createCategory(@RequestBody CategoryDTO.Request categoryRequestDTO) {
-        Category parent = categoryService.getCategory(categoryRequestDTO.getParentId());
+        Category parent = categoryRequestDTO.getParentId() == null ? null :
+                categoryService.getCategory(categoryRequestDTO.getParentId());
 
         categoryService.createCategory(categoryRequestDTO.getName(), parent);
     }
