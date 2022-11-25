@@ -21,11 +21,13 @@ public class CategoryDTO {
     public static class Response {
         private Long id;
         private String name;
+        private int count;
         private List<CategoryDTO.Response> subCategories;
 
         public Response(Category entity) {
             this.id = entity.getId();
             this.name = entity.getName();
+            this.count = entity.getCount();
             this.subCategories = entity.getSubCategories().stream()
                     .map(CategoryDTO.Response::new)
                     .collect(Collectors.toList());
