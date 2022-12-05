@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "USER")
@@ -18,7 +20,7 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_uuid", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", unique = true, nullable = false)
     private String userId;
 
     @Column(length = 20, nullable = false)
@@ -29,6 +31,9 @@ public class User extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts = new ArrayList<>();
 
     @Builder
     public User(String userId, String password, String name, String email) {
