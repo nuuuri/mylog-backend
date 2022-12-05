@@ -1,5 +1,6 @@
 package io.github.nuuuri.mylog.data.entity;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,10 +9,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
+
 @Entity
 @Table(name = "CATEGORY")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {
 
     @Id
@@ -36,9 +38,9 @@ public class Category {
     private List<Category> subCategories = new ArrayList<>();
 
     @Builder
-    public Category (String name, Category parent) {
+    public Category(String name, Category parent) {
         this.name = name;
-        this.label = parent == null ? name : parent.label + "/" + name ;
+        this.label = parent == null ? name : parent.label + "/" + name;
         this.count = 0;
         this.parent = parent;
     }
