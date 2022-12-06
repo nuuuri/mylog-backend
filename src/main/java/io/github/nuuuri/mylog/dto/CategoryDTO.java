@@ -34,7 +34,8 @@ public class CategoryDTO {
             this.name = entity.getName();
             this.label = entity.getLabel();
             this.count = entity.getCount();
-            this.subCategories = entity.getSubCategories().stream()
+            this.subCategories = entity.getSubCategories()
+                    .stream()
                     .map(CategoryDTO.Response::new)
                     .collect(Collectors.toList());
         }
