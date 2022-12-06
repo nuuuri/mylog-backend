@@ -13,14 +13,14 @@ public class CategoryDTO {
 
     @Data
     @AllArgsConstructor
-    @ApiModel(value = "categoryRequestDTO")
+    @ApiModel(value = "CategoryRequestDTO")
     public static class Request {
         private String name;
         private Long parentId;
     }
 
     @Data
-    @ApiModel(value = "categoryResponseDTO")
+    @ApiModel(value = "CategoryResponseDTO")
     public static class Response {
         private Long id;
         private String name;

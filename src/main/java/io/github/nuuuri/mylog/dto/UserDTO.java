@@ -10,7 +10,7 @@ public class UserDTO {
 
     @Data
     @AllArgsConstructor
-    @ApiModel(value = "userRequestDTO")
+    @ApiModel(value = "UserRequestDTO")
     public static class Request {
         private String userId;
         private String password;
@@ -29,13 +29,13 @@ public class UserDTO {
     }
 
     @Data
-    @ApiModel(value = "userResponseDTO")
+    @ApiModel(value = "UserResponseDTO")
     public static class Response {
         private String userId;
         private String name;
         private String email;
 
-        public Response(User entity){
+        public Response(User entity) {
             this.userId = entity.getUserId();
             this.name = entity.getName();
             this.email = entity.getEmail();

@@ -10,7 +10,7 @@ public class BlockListDTO {
 
     @Data
     @AllArgsConstructor
-    @ApiModel(value = "blockListRequestDTO")
+    @ApiModel(value = "BlockListRequestDTO")
     public static class Request {
         private Long postId;
         private List<BlockDTO.Request> blocks;

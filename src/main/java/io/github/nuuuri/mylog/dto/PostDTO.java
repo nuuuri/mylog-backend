@@ -1,18 +1,15 @@
 package io.github.nuuuri.mylog.dto;
 
-import io.github.nuuuri.mylog.data.entity.Category;
 import io.github.nuuuri.mylog.data.entity.Post;
-import io.github.nuuuri.mylog.data.entity.User;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 
 public class PostDTO {
 
     @Data
     @AllArgsConstructor
-    @ApiModel(value = "postRequestDTO")
+    @ApiModel(value = "PostRequestDTO")
     public static class Request {
         private String userId;
         private Long categoryId;
@@ -20,7 +17,7 @@ public class PostDTO {
     }
 
     @Data
-    @ApiModel(value = "postResponseDTO")
+    @ApiModel(value = "PostResponseDTO")
     public static class Response {
         private String userId;
         private String category;
