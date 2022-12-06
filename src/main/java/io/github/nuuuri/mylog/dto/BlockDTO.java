@@ -2,14 +2,16 @@ package io.github.nuuuri.mylog.dto;
 
 import io.github.nuuuri.mylog.data.entity.Block;
 import io.github.nuuuri.mylog.data.entity.Post;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import io.swagger.annotations.ApiModel;
+import lombok.*;
 
 
 public class BlockDTO {
 
     @Data
+    @Setter(AccessLevel.NONE)
     @AllArgsConstructor
+    @ApiModel(value = "BlockRequestDTO")
     public static class Request {
         private String html;
         private String tag;
@@ -21,6 +23,20 @@ public class BlockDTO {
                     .tag(tag)
                     .index(index)
                     .build();
+        }
+    }
+
+    @Getter
+    @ApiModel(value = "BlockResponseDTO")
+    public static class Response {
+        private Long id;
+        private String html;
+        private String tag;
+
+        public Response(Block entity) {
+            this.id = entity.getId();
+            this.html = entity.getHtml();
+            this.tag = entity.getTag();
         }
     }
 }
