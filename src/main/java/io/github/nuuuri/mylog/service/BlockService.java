@@ -5,7 +5,6 @@ import io.github.nuuuri.mylog.data.entity.Post;
 import io.github.nuuuri.mylog.data.repository.BlockRepository;
 import io.github.nuuuri.mylog.data.repository.PostRepository;
 import io.github.nuuuri.mylog.dto.BlockDTO;
-import io.github.nuuuri.mylog.dto.BlockListDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +21,8 @@ public class BlockService {
     private final PostRepository postRepository;
 
     @Transactional
-    public void createBlocks(BlockListDTO.Request request) {
-        List<BlockDTO.Request> blockDTOList = request.getBlocks();
-        Post post = postRepository.findById(request.getPostId())
+    public void createBlocks(Long postId, List<BlockDTO.Request> blockDTOList) {
+        Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
 
         List<Block> blocks = IntStream.range(0, blockDTOList.size())
@@ -32,5 +30,13 @@ public class BlockService {
                 .collect(Collectors.toList());
 
         blockRepository.saveAll(blocks);
+    }
+
+    @Transactional
+    public List<BlockDTO.Response> getBlocks(Long postId) {
+        return blockRepository.findAllByPostId(postId)
+                .stream()
+                .map(BlockDTO.Response::new)
+                .collect(Collectors.toList());
     }
 }

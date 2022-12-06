@@ -3,6 +3,7 @@ package io.github.nuuuri.mylog.service;
 import io.github.nuuuri.mylog.data.entity.Category;
 import io.github.nuuuri.mylog.data.entity.Post;
 import io.github.nuuuri.mylog.data.entity.User;
+import io.github.nuuuri.mylog.data.repository.BlockRepository;
 import io.github.nuuuri.mylog.data.repository.CategoryRepository;
 import io.github.nuuuri.mylog.data.repository.PostRepository;
 import io.github.nuuuri.mylog.data.repository.UserRepository;
@@ -19,6 +20,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+    private final BlockService blockService;
 
     @Transactional
     public Long createPost(PostDTO.Request postRequestDTO) {
@@ -34,7 +36,10 @@ public class PostService {
                 .title(postRequestDTO.getTitle())
                 .build();
 
-        return postRepository.save(post).getId();
+        Long postId = postRepository.save(post).getId();
+        blockService.createBlocks(postId, postRequestDTO.getBlocks());
+
+        return postId;
     }
 
     @Transactional
