@@ -3,7 +3,6 @@ package io.github.nuuuri.mylog.service;
 import io.github.nuuuri.mylog.data.entity.Category;
 import io.github.nuuuri.mylog.data.entity.Post;
 import io.github.nuuuri.mylog.data.entity.User;
-import io.github.nuuuri.mylog.data.repository.BlockRepository;
 import io.github.nuuuri.mylog.data.repository.CategoryRepository;
 import io.github.nuuuri.mylog.data.repository.PostRepository;
 import io.github.nuuuri.mylog.data.repository.UserRepository;

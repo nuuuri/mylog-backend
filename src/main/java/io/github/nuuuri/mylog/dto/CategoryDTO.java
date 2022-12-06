@@ -3,7 +3,6 @@ package io.github.nuuuri.mylog.dto;
 import io.github.nuuuri.mylog.data.entity.Category;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;

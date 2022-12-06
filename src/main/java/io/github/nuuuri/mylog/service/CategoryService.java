@@ -2,7 +2,6 @@ package io.github.nuuuri.mylog.service;
 
 import io.github.nuuuri.mylog.data.entity.Category;
 import io.github.nuuuri.mylog.data.repository.CategoryRepository;
-import io.github.nuuuri.mylog.dto.CategoryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
