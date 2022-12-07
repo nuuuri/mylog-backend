@@ -27,7 +27,7 @@ public class Post extends BaseTimeEntity {
     private int look;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, updatable = false)
+    @JoinColumn(name = "user_uuid", nullable = false, updatable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
