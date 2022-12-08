@@ -1,6 +1,6 @@
 package io.github.nuuuri.mylog.controller;
 
-import io.github.nuuuri.mylog.dto.PostDTO;
+import io.github.nuuuri.mylog.dto.PostDetailDTO;
 import io.github.nuuuri.mylog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,8 +16,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping()
-    public Long createPost(@RequestBody PostDTO.Request postRequestDTO) {
-        return postService.createPost(postRequestDTO);
+    public Long createPost(@RequestBody PostDetailDTO.Request request) {
+        return postService.createPost(request);
     }
 
     @GetMapping(value = "/{postId}")
@@ -31,6 +31,17 @@ public class PostController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("게시글 정보 조회 실패");
+        }
+    }
+
+    @GetMapping()
+    public ResponseEntity getTotalPostList() {
+        try {
+            return ResponseEntity.ok()
+                    .body(postService.getTotalPostList());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("게시글 목록 조회 실패");
         }
     }
 }
