@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 @Table(name = "CATEGORY")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate
 public class Category {
 
     @Id
@@ -46,5 +48,9 @@ public class Category {
         this.label = parent == null ? name : parent.label + "/" + name;
         this.count = 0;
         this.parent = parent;
+    }
+
+    public void increaseCount() {
+        this.count += 1;
     }
 }

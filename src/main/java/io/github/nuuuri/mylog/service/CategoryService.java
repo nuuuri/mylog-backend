@@ -14,7 +14,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public void createCategory (String name, Category parent) {
+    public void createCategory(String name, Category parent) {
         Category category = Category.builder()
                 .name(name)
                 .parent(parent)
@@ -24,12 +24,23 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
-    public Category getCategory (Long id) {
+    public Category getCategory(Long id) {
         return categoryRepository.findById(id).orElseGet(null);
     }
 
     @Transactional(readOnly = true)
     public List<Category> getCategoryList() {
         return categoryRepository.findAllByParentIdIsNull();
+    }
+
+    @Transactional
+    public void increaseCount(Long id) {
+        Category category = this.getCategory(id);
+
+        if (category.getParent() != null) {
+            category.getParent().increaseCount();
+        }
+
+        category.increaseCount();
     }
 }
