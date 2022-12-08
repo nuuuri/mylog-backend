@@ -16,8 +16,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping()
-    public Long createPost(@RequestBody PostDetailDTO.Request request) {
-        return postService.createPost(request);
+    public void createPost(@RequestBody PostDetailDTO.Request request){
+        postService.createPost(request);
     }
 
     @GetMapping(value = "/{postId}")

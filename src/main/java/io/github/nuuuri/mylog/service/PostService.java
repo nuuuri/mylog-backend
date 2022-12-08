@@ -22,14 +22,15 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+
     private final BlockService blockService;
     private final CategoryService categoryService;
 
     @Transactional
-    public Long createPost(PostDetailDTO.Request postRequestDTO) {
+    public void createPost(PostDetailDTO.Request postRequestDTO) {
         User user = userRepository.findByUserId(postRequestDTO.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("해당 유저가 존재하지 않습니다."));
-        
+
         Category category = categoryRepository.findById(postRequestDTO.getCategoryId())
                 .orElseThrow(() -> new EntityNotFoundException("해당 카테고리가 존재하지 않습니다."));
 
@@ -43,8 +44,6 @@ public class PostService {
 
         blockService.createBlocks(postId, postRequestDTO.getBlocks());
         categoryService.increaseCount(category.getId());
-
-        return postId;
     }
 
     @Transactional
