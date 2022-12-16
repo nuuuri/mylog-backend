@@ -46,7 +46,7 @@ public class PostService {
         categoryService.increaseCount(category.getId());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public PostDetailDTO.Response getPost(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지않습니다."));
@@ -54,12 +54,22 @@ public class PostService {
         return new PostDetailDTO.Response(post);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PostDTO> getTotalPostList() {
-        return postRepository.findAll()
+        return postRepository.findAllByOrderByModifiedDesc()
                 .stream()
                 .map(PostDTO::new)
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<PostDTO> getPostListByCategoryName(String categoryName) {
+        Category category = categoryRepository.findByName(categoryName)
+                .orElseThrow(()->new EntityNotFoundException("해당 카테고리가 존재하지 않습니다."));
+
+        return postRepository.findAllByCategoryIdOrderByModifiedDesc(category.getId())
+                .stream()
+                .map(PostDTO::new)
+                .collect(Collectors.toList());
+    }
 }

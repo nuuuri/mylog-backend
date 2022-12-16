@@ -16,7 +16,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping()
-    public void createPost(@RequestBody PostDetailDTO.Request request){
+    public void createPost(@RequestBody PostDetailDTO.Request request) {
         postService.createPost(request);
     }
 
@@ -42,6 +42,17 @@ public class PostController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("게시글 목록 조회 실패");
+        }
+    }
+
+    @GetMapping(value = "/category")
+    public ResponseEntity getPostListByCategory(@RequestParam String name) {
+        try {
+            return ResponseEntity.ok()
+                    .body(postService.getPostListByCategoryName(name));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("카테고리 게시글 목록 조회 실패");
         }
     }
 }

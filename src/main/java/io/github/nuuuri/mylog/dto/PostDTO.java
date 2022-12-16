@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class PostDTO {
+    private Long id;
     private String title;
     private String preview;
     private String writer;
@@ -17,6 +18,7 @@ public class PostDTO {
     private int look;
 
     public PostDTO(Post entity) {
+        this.id = entity.getId();
         this.title = entity.getTitle();
         this.preview = "";
         this.writer = entity.getUser().getUserId();
