@@ -22,7 +22,7 @@ public class PostDTO {
         this.title = entity.getTitle();
         this.preview = entity.getPreview();
         this.writer = entity.getUser().getUserId();
-        this.category = entity.getCategory().getName();
+        this.category = entity.getCategory().getLabel();
         this.modified = entity.getModified();
         this.look = entity.getLook();
     }
