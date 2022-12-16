@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -20,16 +20,34 @@ public class BlockService {
     private final BlockRepository blockRepository;
     private final PostRepository postRepository;
 
+
     @Transactional
     public void createBlocks(Long postId, List<BlockDTO.Request> blockDTOList) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 존재하지 않습니다."));
 
-        List<Block> blocks = IntStream.range(0, blockDTOList.size())
-                .mapToObj(i -> blockDTOList.get(i).toEntity(post, i))
-                .collect(Collectors.toList());
+        StringBuffer previewBuffer = new StringBuffer();
+
+        List<Block> blocks = new ArrayList<>();
+
+        for (int i = 0; i < blockDTOList.size(); i++) {
+            Block block = blockDTOList.get(i).toEntity(post, i);
+            blocks.add(block);
+
+            if (previewBuffer.length() < 50) {
+                String contents = block.getHtml()
+                        .replaceAll("\n", " ")
+                        .replaceAll("\\<[^>]*>", " ")
+                        .replaceAll("&lt;", " <")
+                        .replaceAll("&gt;", "> ");
+                previewBuffer.append(contents);
+            }
+        }
+
+        //List<Block> blocks = IntStream.range(0, blockDTOList.size()).mapToObj(i -> blockDTOList.get(i).toEntity(post, i)).collect(Collectors.toList());
 
         blockRepository.saveAll(blocks);
+        post.updatePreview(previewBuffer.toString());
     }
 
     @Transactional

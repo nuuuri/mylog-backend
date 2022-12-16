@@ -20,7 +20,7 @@ public class PostDTO {
     public PostDTO(Post entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
-        this.preview = "";
+        this.preview = entity.getPreview();
         this.writer = entity.getUser().getUserId();
         this.category = entity.getCategory().getName();
         this.modified = entity.getModified();

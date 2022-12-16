@@ -26,6 +26,9 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false)
     private int look;
 
+    @Column
+    private String preview;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_uuid", nullable = false, updatable = false)
     private User user;
@@ -43,5 +46,10 @@ public class Post extends BaseTimeEntity {
         this.category = category;
         this.title = title;
         this.look = 0;
+        this.preview = "";
+    }
+
+    public void updatePreview(String preview) {
+        this.preview = preview;
     }
 }
