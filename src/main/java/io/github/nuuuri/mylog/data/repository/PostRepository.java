@@ -11,5 +11,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> findAllByOrderByModifiedDesc();
 
-    List<Post> findAllByCategoryIdOrderByModifiedDesc(Long categoryId);
+    List<Post> findAllByCategoryId(Long categoryId);
 }

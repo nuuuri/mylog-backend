@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,11 +66,26 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostDTO> getPostListByCategoryName(String categoryName) {
         Category category = categoryRepository.findByName(categoryName)
-                .orElseThrow(()->new EntityNotFoundException("해당 카테고리가 존재하지 않습니다."));
+                .orElseThrow(() -> new EntityNotFoundException("해당 카테고리가 존재하지 않습니다."));
 
-        return postRepository.findAllByCategoryIdOrderByModifiedDesc(category.getId())
+        List<PostDTO> result = postRepository.findAllByCategoryId(category.getId())
                 .stream()
                 .map(PostDTO::new)
+                .collect(Collectors.toList());
+
+        // 하위 카테고리가 있는 경우
+        int subCategorySize = category.getSubCategories().size();
+        if (subCategorySize > 0) {
+            for (int i = 0; i < subCategorySize; i++) {
+                String subCategoryName = category.getSubCategories().get(i).getName();
+                List<PostDTO> subList = getPostListByCategoryName(subCategoryName);
+
+                result.addAll(subList);
+            }
+        }
+
+        return result.stream()
+                .sorted(Comparator.comparing(PostDTO::getModified).reversed())
                 .collect(Collectors.toList());
     }
 }
